@@ -1,6 +1,6 @@
 package com.orion.mdd.mddapi.dtos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserDTO {
 	private Long id;
-    private String name;
-    private String email;
-    private Date created_at;
-    private Date updated_at;
+	private String username;
+	private String email;
+	private LocalDateTime created_at;
+	private LocalDateTime updated_at;
 }

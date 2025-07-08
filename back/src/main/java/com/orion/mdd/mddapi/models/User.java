@@ -1,20 +1,16 @@
 package com.orion.mdd.mddapi.models;
 
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDateTime;
 
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,24 +21,23 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(unique = true, length = 255)
-    private String email;
-    
-    @Column(length = 255)
-    private String name;
+	@Column(unique = true, length = 255)
+	private String email;
 
-    @Column(length = 255)
-    private String password;
+	@Column(length = 255)
+	private String username;
 
-    @CreationTimestamp
-    @Column(name="created_at")
-    private Date createdAt;
-    
-    @UpdateTimestamp
-    @Column(name="updated_at")
-    private Date updatedAt;
+	@Column(length = 255)
+	private String password;
+
+	@CreationTimestamp
+	@Column(name = "created_at")
+	private LocalDateTime createdAt;
+
+	@UpdateTimestamp
+	@Column(name = "updated_at")
+	private LocalDateTime updatedAt;
 }
-
