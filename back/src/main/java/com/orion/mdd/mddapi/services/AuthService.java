@@ -36,10 +36,17 @@ public class AuthService {
 	 * @return AuthDTO
 	 */
 	public AuthDTO register(RegisterDTO request) {
+		/**
+		 * if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$",
+		 * request.getPassword())) { throw new BadCredentialsException( "Le mot de passe
+		 * doit contenir au moins une majuscule, une minuscule, un chiffre et un
+		 * caractère spécial."); }
+		 **/
+
 		User user = new User();
-		user.setUsername(request.getUsername());
-		user.setEmail(request.getEmail());
-		user.setPassword(passwordEncoder.encode(request.getPassword()));
+		user.setUsername(request.username());
+		user.setEmail(request.email());
+		user.setPassword(passwordEncoder.encode(request.password()));
 
 		LocalDateTime date = LocalDateTime.now();
 		user.setCreatedAt(date);
@@ -59,9 +66,13 @@ public class AuthService {
 	 * @return AuthDTO
 	 */
 	public AuthDTO login(LoginDTO request) {
-		User user = loadUserByIdentifier(request.getIdentifier());
+		User user = loadUserByIdentifier(request.identifier());
 
-		if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+		if (user == null) {
+			throw new UsernameNotFoundException("Utilisateur introuvable");
+		}
+
+		if (!passwordEncoder.matches(request.password(), user.getPassword())) {
 			throw new BadCredentialsException("Mot de passe invalide");
 		}
 
