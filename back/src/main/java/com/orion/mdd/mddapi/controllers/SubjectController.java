@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orion.mdd.mddapi.dtos.SubjectDTO;
+import com.orion.mdd.mddapi.dtos.SubjectWithSubscriptionDTO;
 import com.orion.mdd.mddapi.mapper.SubjectMapper;
 import com.orion.mdd.mddapi.models.Subject;
 import com.orion.mdd.mddapi.models.User;
@@ -89,6 +90,19 @@ public class SubjectController {
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
+	}
+
+	/**
+	 * Retrieves the full list of themes and returns it with an isSubscribed
+	 * attribute based on the choice of logged-in user
+	 * 
+	 * @return List<SubjectWithSubscriptionDTO> subjects
+	 */
+	@GetMapping("/with-subscription-status")
+	public ResponseEntity<List<SubjectWithSubscriptionDTO>> getSubjectsWithSubscriptionStatus() {
+		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		List<SubjectWithSubscriptionDTO> subjects = subjectService.getAllSubjectsWithSubscriptionStatus(user);
+		return ResponseEntity.ok(subjects);
 	}
 
 }
