@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orion.mdd.mddapi.dtos.UserDTO;
+import com.orion.mdd.mddapi.dtos.UserWithSubjectsDTO;
 import com.orion.mdd.mddapi.mapper.UserMapper;
 import com.orion.mdd.mddapi.models.User;
 import com.orion.mdd.mddapi.services.UserService;
@@ -31,5 +32,13 @@ public class UserController {
 		User user = userService.getUserById(id);
 		UserDTO userDTO = userMapper.toDto(user);
 		return ResponseEntity.ok(userDTO);
+	}
+
+	@GetMapping("/{id}/subjects")
+	public ResponseEntity<UserWithSubjectsDTO> getSubjectsForCurrentUser(@PathVariable Long id) {
+		User user = userService.getUserById(id);
+
+		UserWithSubjectsDTO dto = userMapper.toUserWithSubjectsDTO(user);
+		return ResponseEntity.ok(dto);
 	}
 }
