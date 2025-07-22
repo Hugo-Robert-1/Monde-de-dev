@@ -8,10 +8,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.orion.mdd.mddapi.dtos.AuthDTO;
-import com.orion.mdd.mddapi.dtos.LoginDTO;
-import com.orion.mdd.mddapi.dtos.RegisterDTO;
 import com.orion.mdd.mddapi.dtos.UserDTO;
 import com.orion.mdd.mddapi.models.User;
+import com.orion.mdd.mddapi.payload.request.LoginRequest;
+import com.orion.mdd.mddapi.payload.request.RegisterRequest;
 import com.orion.mdd.mddapi.repositories.UserRepository;
 
 @Service
@@ -35,7 +35,7 @@ public class AuthService {
 	 * @param request
 	 * @return AuthDTO
 	 */
-	public AuthDTO register(RegisterDTO request) {
+	public AuthDTO register(RegisterRequest request) {
 		/**
 		 * if (!Pattern.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[^a-zA-Z0-9]).+$",
 		 * request.getPassword())) { throw new BadCredentialsException( "Le mot de passe
@@ -65,7 +65,7 @@ public class AuthService {
 	 * @param request
 	 * @return AuthDTO
 	 */
-	public AuthDTO login(LoginDTO request) {
+	public AuthDTO login(LoginRequest request) {
 		User user = loadUserByIdentifier(request.identifier());
 
 		if (user == null) {

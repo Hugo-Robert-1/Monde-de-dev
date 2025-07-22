@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orion.mdd.mddapi.dtos.AuthDTO;
-import com.orion.mdd.mddapi.dtos.LoginDTO;
-import com.orion.mdd.mddapi.dtos.RegisterDTO;
 import com.orion.mdd.mddapi.dtos.UserDTO;
 import com.orion.mdd.mddapi.models.User;
+import com.orion.mdd.mddapi.payload.request.LoginRequest;
+import com.orion.mdd.mddapi.payload.request.RegisterRequest;
 import com.orion.mdd.mddapi.services.AuthService;
 
 @RestController
@@ -26,12 +26,12 @@ public class AuthController {
 	}
 
 	@PostMapping("/register")
-	public ResponseEntity<AuthDTO> register(@RequestBody RegisterDTO request) {
+	public ResponseEntity<AuthDTO> register(@RequestBody RegisterRequest request) {
 		return ResponseEntity.ok(authService.register(request));
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<AuthDTO> login(@RequestBody LoginDTO request) {
+	public ResponseEntity<AuthDTO> login(@RequestBody LoginRequest request) {
 		return ResponseEntity.ok(authService.login(request));
 	}
 
