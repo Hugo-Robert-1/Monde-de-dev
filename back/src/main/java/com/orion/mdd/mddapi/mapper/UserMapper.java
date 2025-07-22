@@ -7,6 +7,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.orion.mdd.mddapi.dtos.UserDTO;
+import com.orion.mdd.mddapi.dtos.UserLightDTO;
 import com.orion.mdd.mddapi.dtos.UserWithSubjectsDTO;
 import com.orion.mdd.mddapi.models.User;
 
@@ -23,4 +24,12 @@ public interface UserMapper {
 	// Mapping pour récupérer la liste des thèmes auquels l'utilisateur est abonné
 	@Mapping(source = "subscribedSubjects", target = "subscribedSubjects")
 	UserWithSubjectsDTO toUserWithSubjectsDTO(User user);
+
+	// Méthode pour DTO allégé
+	default UserLightDTO toLightDto(User user) {
+		if (user == null) {
+			return null;
+		}
+		return new UserLightDTO(user.getId(), user.getUsername());
+	}
 }
