@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.orion.mdd.mddapi.dtos.PostCreateDTO;
 import com.orion.mdd.mddapi.dtos.PostDTO;
+import com.orion.mdd.mddapi.dtos.PostWithCommentsDTO;
+import com.orion.mdd.mddapi.mapper.CommentMapper;
 import com.orion.mdd.mddapi.mapper.PostMapper;
 import com.orion.mdd.mddapi.models.Post;
 import com.orion.mdd.mddapi.models.User;
@@ -33,6 +35,9 @@ public class PostController {
 	@Autowired
 	private AuthService authService;
 
+	@Autowired
+	private CommentMapper commentMapper;
+
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody PostCreateDTO postDto) {
 		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
@@ -42,10 +47,11 @@ public class PostController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<PostDTO> getPostById(@PathVariable Long id) {
+	public ResponseEntity<PostWithCommentsDTO> getPostById(@PathVariable Long id) {
 		Post post = postService.findById(id);
-		PostDTO postDTO = postMapper.toDto(post);
-		return ResponseEntity.ok(postDTO);
+		// PostDTO postDTO = postMapper.toDto(post);
+		PostWithCommentsDTO dto = postMapper.toDtoWithComments(post, commentMapper);
+		return ResponseEntity.ok(dto);
 	}
 
 	/**
