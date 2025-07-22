@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.orion.mdd.mddapi.dtos.PostCreateDTO;
@@ -34,6 +35,29 @@ public class PostService {
 		Set<Subject> subscribedSubjects = user.getSubscribedSubjects();
 		List<Post> articles = postRepository.findBySubjectIn(subscribedSubjects);
 		return postMapper.toDtoList(articles);
+	}
+
+	public List<PostDTO> getPostsFromSubscribedSubjects(Long userId, String order) {
+		User user = userRepository.findById(userId)
+				.orElseThrow(() -> new RuntimeException("User not found"));
+
+		Set<Subject> subscribedSubjects = user.getSubscribedSubjects();
+
+		if (subscribedSubjects == null || subscribedSubjects.isEmpty()) {
+			return List.of(); // retourne une liste vide si aucun abonnement
+		}
+
+		List<Long> subjectIds = subscribedSubjects.stream()
+				.map(Subject::getId)
+				.toList();
+
+		Sort sort = "asc".equalsIgnoreCase(order)
+				? Sort.by("createdAt").ascending()
+				: Sort.by("createdAt").descending();
+
+		List<Post> posts = postRepository.findBySubjectIdIn(subjectIds, sort);
+
+		return postMapper.toDtoList(posts);
 	}
 
 	public void create(PostCreateDTO postDto, User user) {
