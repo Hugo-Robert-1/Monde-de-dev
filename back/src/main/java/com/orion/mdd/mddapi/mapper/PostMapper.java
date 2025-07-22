@@ -1,6 +1,7 @@
 package com.orion.mdd.mddapi.mapper;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -8,6 +9,7 @@ import org.mapstruct.Named;
 import org.mapstruct.factory.Mappers;
 
 import com.orion.mdd.mddapi.dtos.PostDTO;
+import com.orion.mdd.mddapi.dtos.PostWithCommentsDTO;
 import com.orion.mdd.mddapi.dtos.SubjectLightDTO;
 import com.orion.mdd.mddapi.dtos.UserLightDTO;
 import com.orion.mdd.mddapi.models.Post;
@@ -36,5 +38,18 @@ public interface PostMapper {
 	@Named("toLightSubjectDto")
 	default SubjectLightDTO toLightSubjectDto(com.orion.mdd.mddapi.models.Subject subject) {
 		return subjectMapper.toLightDto(subject);
+	}
+
+	default PostWithCommentsDTO toDtoWithComments(Post post, CommentMapper commentMapper) {
+		return new PostWithCommentsDTO(
+				post.getId(),
+				post.getTitle(),
+				post.getContent(),
+				toLightSubjectDto(post.getSubject()),
+				post.getCreatedAt(),
+				toLightUserDto(post.getAuthor()),
+				post.getComments().stream()
+						.map(commentMapper::toDto)
+						.collect(Collectors.toList()));
 	}
 }
