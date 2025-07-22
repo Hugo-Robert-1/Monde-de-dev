@@ -8,6 +8,7 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 
 import com.orion.mdd.mddapi.dtos.UserDTO;
 import com.orion.mdd.mddapi.dtos.UserLightDTO;
+import com.orion.mdd.mddapi.dtos.UserUpdatedDTO;
 import com.orion.mdd.mddapi.dtos.UserWithSubjectsDTO;
 import com.orion.mdd.mddapi.models.User;
 
@@ -32,4 +33,6 @@ public interface UserMapper {
 		}
 		return new UserLightDTO(user.getId(), user.getUsername());
 	}
+
+	User toEntity(UserUpdatedDTO userUpdatedDto);
 }
