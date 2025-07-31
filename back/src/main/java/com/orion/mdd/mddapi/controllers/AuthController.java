@@ -36,8 +36,9 @@ public class AuthController {
 	}
 
 	@GetMapping("/me")
-	public ResponseEntity<UserDTO> me() {
-		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	public ResponseEntity<UserDTO> me(Authentication authentication) {
+		String identifier = authentication.getName(); // peut être un email ou un username
+		User user = authService.findUserByIdentifier(identifier);
 		return ResponseEntity.ok(authService.getCurrentUser(user));
 	}
 }

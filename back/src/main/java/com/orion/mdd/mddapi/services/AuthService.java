@@ -2,6 +2,7 @@ package com.orion.mdd.mddapi.services;
 
 import java.time.LocalDateTime;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,17 +18,16 @@ import com.orion.mdd.mddapi.repositories.UserRepository;
 @Service
 public class AuthService {
 
-	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
-	private final JWTService jwtService;
+	@Autowired
+	private UserRepository userRepository;
 
-	public AuthService(UserRepository userRepository,
-			PasswordEncoder passwordEncoder,
-			JWTService jwtService) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-		this.jwtService = jwtService;
-	}
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+
+	@Autowired
+	private JWTService jwtService;
+
+	
 
 	/**
 	 * Create a new user and return a jwt token linked to that new user
@@ -110,4 +110,16 @@ public class AuthService {
 		}
 		return user;
 	}
+
+	public User findUserByIdentifier(String identifier) {
+		User user = userRepository.findByEmail(identifier);
+		if (user == null) {
+			user = userRepository.findByUsername(identifier);
+		}
+		if (user == null) {
+			throw new UsernameNotFoundException("Utilisateur non trouvé avec l'identifiant : " + identifier);
+		}
+		return user;
+	}
+
 }

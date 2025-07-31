@@ -55,7 +55,7 @@ public class UserController {
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id, @RequestBody UserUpdatedDTO userUpdatedDto) {
 		try {
-			User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (!user.getId().equals(Long.parseLong(id))) {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN)
 						.body("You are not authorized to modify this user");
