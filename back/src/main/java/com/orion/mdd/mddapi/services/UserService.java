@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.orion.mdd.mddapi.dtos.AuthDTO;
+import com.orion.mdd.mddapi.models.RefreshToken;
 import com.orion.mdd.mddapi.models.User;
 import com.orion.mdd.mddapi.repositories.UserRepository;
 
@@ -20,6 +22,9 @@ public class UserService {
 
 	@Autowired
 	private JWTService tokenGenerator;
+
+	@Autowired
+	private RefreshTokenService refreshTokenService;
 
 	/**
 	 * Get a user by his ID
@@ -41,7 +46,7 @@ public class UserService {
 	 * @param updatedUser
 	 * @return
 	 */
-	public String update(User user, User updatedUser) {
+	public AuthDTO update(User user, User updatedUser) {
 		if (updatedUser.getUsername() != null && !updatedUser.getUsername().isEmpty()) {
 			user.setUsername(updatedUser.getUsername());
 		}
@@ -64,6 +69,13 @@ public class UserService {
 
 		this.userRepository.save(user);
 
-		return tokenGenerator.generateToken(user.getEmail());
+		// We delete the refresh token from the database and we create a new one
+		refreshTokenService.deleteByUserId(user.getId());
+
+		String token = tokenGenerator.generateToken(user.getEmail());
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+
+		return new AuthDTO(token, refreshToken.getToken());
+
 	}
 }

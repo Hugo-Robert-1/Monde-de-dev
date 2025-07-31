@@ -9,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.orion.mdd.mddapi.dtos.AuthDTO;
+import com.orion.mdd.mddapi.dtos.TokenRefreshRequestDTO;
 import com.orion.mdd.mddapi.dtos.UserDTO;
+import com.orion.mdd.mddapi.models.RefreshToken;
 import com.orion.mdd.mddapi.models.User;
 import com.orion.mdd.mddapi.payload.request.LoginRequest;
 import com.orion.mdd.mddapi.payload.request.RegisterRequest;
@@ -27,8 +29,9 @@ public class AuthService {
 	@Autowired
 	private JWTService jwtService;
 
+	@Autowired
+	private RefreshTokenService refreshTokenService;
 	
-
 	/**
 	 * Create a new user and return a jwt token linked to that new user
 	 * 
@@ -55,7 +58,8 @@ public class AuthService {
 		userRepository.save(user);
 
 		String jwt = jwtService.generateToken(user.getEmail());
-		return new AuthDTO(jwt);
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+		return new AuthDTO(jwt, refreshToken.getToken());
 	}
 
 	/**
@@ -76,9 +80,10 @@ public class AuthService {
 			throw new BadCredentialsException("Mot de passe invalide");
 		}
 
-		String jwt = jwtService.generateToken(user.getEmail());
+		String jwt = jwtService.generateToken(user.getUsername());
 
-		return new AuthDTO(jwt);
+		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+		return new AuthDTO(jwt, refreshToken.getToken());
 	}
 
 	public User loadUserByIdentifier(String identifier) {
@@ -122,4 +127,15 @@ public class AuthService {
 		return user;
 	}
 
+	public AuthDTO refreshAccessToken(TokenRefreshRequestDTO request) {
+		String refreshToken = request.refreshToken();
+
+		RefreshToken token = refreshTokenService.findByToken(refreshToken)
+				.orElseThrow(() -> new RuntimeException("Refresh token not found"));
+
+		refreshTokenService.verifyExpiration(token);
+
+		String newAccessToken = jwtService.generateToken(token.getUser().getUsername());
+		return new AuthDTO(newAccessToken, refreshToken);
+	}
 }
