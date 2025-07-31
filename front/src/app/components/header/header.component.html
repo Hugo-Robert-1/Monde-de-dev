@@ -1,0 +1,32 @@
+<mat-toolbar class="toolbar" color="transparent" *ngIf="!isHomePage && !isAuthPageMobile">
+  <!-- Logo -->
+  <a class="logo" routerLink="/">
+    <img src="/assets/logo_p6.png" alt="Logo" />
+  </a>
+
+  <ng-container *ngIf="!isAuthPage">
+    <span class="spacer"></span>
+
+    <nav class="nav-links">
+      <a mat-button routerLink="/articles">Articles</a>
+      <a mat-button routerLink="/contact">Thèmes</a>
+      <button mat-icon-button routerLink="/profil" aria-label="Profil" class="circular-icon-button">
+        <mat-icon>person</mat-icon>
+      </button>
+    </nav>
+
+    <button mat-icon-button class="burger-button" aria-label="Menu">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container" *ngIf="!isAuthPageMobile">
+  <mat-sidenav #drawer mode="over" position="end">
+    <nav class="mobile-menu">
+      <a mat-button routerLink="/articles" (click)="drawer.close()">Articles</a>
+      <a mat-button routerLink="/contact" (click)="drawer.close()">Thèmes</a>
+      <a mat-button routerLink="/profil" (click)="drawer.close()">Profil</a>
+    </nav>
+  </mat-sidenav>
+</mat-sidenav-container>
