@@ -33,6 +33,30 @@ export class SessionService {
     this._isLoggedIn$.next(false);
   }
 
+  // Login automatique au démarrage
+  autoLogin(): Observable<boolean> {
+    return this.refreshToken().pipe(
+      tap(response => {
+        this.accessToken = response.accessToken;
+        this._isLoggedIn$.next(true);
+      }),
+      map(() => true),
+      catchError(() => {
+        this.logOut();
+        return of(false);
+      })
+    );
+  }
+
+  // Rafraîchissement via cookie httpOnly
+  refreshToken(): Observable<{ accessToken: string }> {
+    return this.http.post<{ accessToken: string }>(
+      `${environment.apiUrl}/api/auth/refresh-token`,
+      {},
+      { withCredentials: true } // Envoie le cookie HttpOnly
+    );
+  }
+
   setAccessToken(token: string): void {
     this.accessToken = token;
     this._isLoggedIn$.next(true);

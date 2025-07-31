@@ -20,7 +20,9 @@ export class AppComponent {
     return this.sessionService.isLoggedIn$;
   }
 
-  title = 'front';
+  ngOnInit() {
+    this.sessionService.autoLogin().subscribe();
+  }
 
   public logout(): void {
     this.sessionService.logOut();
