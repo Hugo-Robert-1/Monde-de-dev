@@ -63,7 +63,7 @@ public class SubjectController {
 				return ResponseEntity.notFound().build();
 			}
 
-			User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 			this.subjectService.subscribe(subject, user);
 
@@ -82,7 +82,7 @@ public class SubjectController {
 				return ResponseEntity.notFound().build();
 			}
 
-			User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 			this.subjectService.unsubscribe(subject, user);
 
@@ -100,7 +100,7 @@ public class SubjectController {
 	 */
 	@GetMapping("/with-subscription-status")
 	public ResponseEntity<List<SubjectWithSubscriptionDTO>> getSubjectsWithSubscriptionStatus() {
-		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 		List<SubjectWithSubscriptionDTO> subjects = subjectService.getAllSubjectsWithSubscriptionStatus(user);
 		return ResponseEntity.ok(subjects);
 	}

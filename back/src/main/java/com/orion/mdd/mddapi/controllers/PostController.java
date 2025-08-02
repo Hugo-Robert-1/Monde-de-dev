@@ -40,7 +40,7 @@ public class PostController {
 
 	@PostMapping
 	public ResponseEntity<?> create(@RequestBody PostCreateDTO postDto) {
-		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		this.postService.create(postDto, user);
 		return ResponseEntity.ok().build();
@@ -63,7 +63,7 @@ public class PostController {
 	@GetMapping("/subscribed")
 	public List<PostDTO> getPostsFromSubscribedSubjects(
 			@RequestParam(defaultValue = "desc") String order) {
-		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		return postService.getPostsFromSubscribedSubjects(user.getId(), order);
 	}

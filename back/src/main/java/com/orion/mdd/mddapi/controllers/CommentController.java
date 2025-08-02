@@ -33,7 +33,7 @@ public class CommentController {
 
 	@PostMapping
 	public ResponseEntity<CommentDTO> createComment(@RequestBody @Valid CommentCreateDTO dto) {
-		User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+		User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 		Comment saved = commentService.createComment(dto, user);
 		return ResponseEntity.ok(commentMapper.toDto(saved));
 	}

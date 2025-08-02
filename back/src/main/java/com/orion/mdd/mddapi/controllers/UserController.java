@@ -1,7 +1,12 @@
 package com.orion.mdd.mddapi.controllers;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,6 +28,9 @@ import com.orion.mdd.mddapi.services.UserService;
 @RestController
 @RequestMapping("/api/user")
 public class UserController {
+
+	@Value("${app.jwtRefreshExpirationMs}")
+	private Long refreshTokenDurationMs;
 
 	@Autowired
 	private UserService userService;
@@ -52,17 +60,39 @@ public class UserController {
 		return ResponseEntity.ok(dto);
 	}
 
+	/**
+	 * @PutMapping("/{id}") public ResponseEntity<?> update(@PathVariable String
+	 * id, @RequestBody UserUpdatedDTO userUpdatedDto) { try { User user =
+	 * authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+	 * if (!user.getId().equals(Long.parseLong(id))) { return
+	 * ResponseEntity.status(HttpStatus.FORBIDDEN) .body("You are not authorized to
+	 * modify this user"); } AuthDTO tokens = this.userService.update(user,
+	 * this.userMapper.toEntity(userUpdatedDto));
+	 * 
+	 * return ResponseEntity.ok().body(tokens); } catch (Exception e) { return
+	 * ResponseEntity.badRequest().build(); } }
+	 **/
 	@PutMapping("/{id}")
 	public ResponseEntity<?> update(@PathVariable String id, @RequestBody UserUpdatedDTO userUpdatedDto) {
 		try {
-			User user = authService.findUserByEmail(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 			if (!user.getId().equals(Long.parseLong(id))) {
 				return ResponseEntity.status(HttpStatus.FORBIDDEN)
 						.body("You are not authorized to modify this user");
 			}
-			String token = this.userService.update(user, this.userMapper.toEntity(userUpdatedDto));
+			AuthDTO tokens = this.userService.update(user, this.userMapper.toEntity(userUpdatedDto));
 
-			return ResponseEntity.ok().body(new AuthDTO(token));
+			ResponseCookie refreshTokenCookie = ResponseCookie.from("refreshToken", tokens.refreshToken())
+					.httpOnly(true)
+					.secure(true)
+					.path("/api/auth/refresh-token")
+					.maxAge(refreshTokenDurationMs / 1000) // ms to secondes
+					.sameSite("Strict")
+					.build();
+
+			return ResponseEntity.ok()
+					.header(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString())
+					.body(Map.of("accessToken", tokens.accessToken()));
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().build();
 		}
