@@ -31,7 +31,7 @@ public class AuthService {
 
 	@Autowired
 	private RefreshTokenService refreshTokenService;
-	
+
 	/**
 	 * Create a new user and return a jwt token linked to that new user
 	 * 
@@ -57,7 +57,7 @@ public class AuthService {
 
 		userRepository.save(user);
 
-		String jwt = jwtService.generateToken(user.getEmail());
+		String jwt = jwtService.generateToken(user.getUsername());
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
 		return new AuthDTO(jwt, refreshToken.getToken());
 	}
