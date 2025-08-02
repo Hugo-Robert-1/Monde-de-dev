@@ -2,6 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
+import { SessionService } from 'src/app/features/sessions/services/session.service';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private routerSub?: Subscription;
   
-  constructor(private router: Router) {}
+  constructor(private router: Router, private sessionService: SessionService) {}
 
   ngOnInit(): void {
     this.updateVisibility();
@@ -24,6 +25,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this.updateVisibility();
     });
+  }
+
+  disconnect(): void {
+    this.sessionService.logOut();
   }
 
   ngOnDestroy(): void {

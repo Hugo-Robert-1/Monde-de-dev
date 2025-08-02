@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, catchError, map, Observable, of, tap } from "rxjs";
 import { SessionInformation } from "../interfaces/sessionInformation.interface";
 import { environment } from "src/environments/environment";
+import { Router } from "@angular/router";
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -11,7 +12,7 @@ export class SessionService {
   private _isLoggedIn$ = new BehaviorSubject<boolean>(this.hasValidAccessToken());
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getAccessToken(): string | null {
     return this.accessToken;
@@ -22,15 +23,14 @@ export class SessionService {
   }
 
   public logIn(user: SessionInformation): void {
-    this.sessionInformation = user;
     this.accessToken = user.accessToken;
     this._isLoggedIn$.next(true);
   }
 
   logOut() {
     this.accessToken = null;
-    this.sessionInformation = null;
     this._isLoggedIn$.next(false);
+    this.router.navigate([''])
   }
 
   // Login automatique au démarrage
