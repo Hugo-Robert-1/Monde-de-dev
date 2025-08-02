@@ -13,7 +13,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './pages/home/home.component';
-import { LoginComponent } from './pages/login/login.component';
 import { HeaderComponent } from './components/header/header.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ReactiveFormsModule } from '@angular/forms';
