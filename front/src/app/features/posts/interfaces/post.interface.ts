@@ -1,7 +1,4 @@
-export interface SubjectLightDTO {
-  id: number;
-  name: string;
-}
+import { SubjectLightDTO } from "../../subjects/interfaces/subject.interface";
 
 export interface UserLightDTO {
   id: number;
@@ -16,3 +13,9 @@ export interface Post {
   createdAt: Date;
   author: UserLightDTO;
 }
+
+export interface PostCreate {
+  title: string;
+  content : string;
+  subjectId: number;
+} 

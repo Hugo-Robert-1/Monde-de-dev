@@ -13,6 +13,7 @@ import { PostsRoutingModule } from './posts-routing.module';
 import localeFr from '@angular/common/locales/fr';
 import { PostComponent } from 'src/app/pages/posts-list/post.component';
 import { PostCardComponent } from 'src/app/components/post-card/post-card.component';
+import { PostCreateComponent } from 'src/app/pages/post-create/post-create.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -27,7 +28,8 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-    PostComponent
+    PostComponent,
+    PostCreateComponent
   ],
   imports: [
     CommonModule,

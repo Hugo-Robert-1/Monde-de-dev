@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from '../interfaces/post.interface';
+import { Post, PostCreate } from '../interfaces/post.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -16,5 +16,9 @@ export class PostApiService {
 
   public getPostsFromSubscribedSubjects(order : String): Observable<Post[]> {
     return this.httpClient.get<Post[]>(this.pathService + `/subscribed?order=${order}`);
+  }
+
+  public create(postCreate: PostCreate) {
+    return this.httpClient.post<PostCreate>(this.pathService, postCreate);
   }
 }
