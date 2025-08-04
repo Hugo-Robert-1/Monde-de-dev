@@ -7,6 +7,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card'
 import { MatInputModule } from '@angular/material/input';
+import { MatChipsModule} from '@angular/material/chips';
+
 
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -39,6 +41,7 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule,
     HttpClientModule,
     MatInputModule,
+    MatChipsModule,
   ],
   providers: [{
     provide: HTTP_INTERCEPTORS,
