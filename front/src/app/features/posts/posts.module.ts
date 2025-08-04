@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { PostsRoutingModule } from './posts-routing.module';
 import localeFr from '@angular/common/locales/fr';
-import { PostComponent } from 'src/app/pages/post/post.component';
+import { PostComponent } from 'src/app/pages/posts-list/post.component';
 import { PostCardComponent } from 'src/app/components/post-card/post-card.component';
 registerLocaleData(localeFr);
 
