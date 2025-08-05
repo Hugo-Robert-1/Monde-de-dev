@@ -1,0 +1,19 @@
+.post-card {
+  max-width: 800px;
+  margin-bottom: 40px;
+  background-color: lightgrey;
+  margin: 24px;
+}
+
+.mat-card-content {
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.post-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}

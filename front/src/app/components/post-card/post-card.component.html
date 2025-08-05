@@ -1,0 +1,13 @@
+<a class="post-card-link" [routerLink]="['/posts', postId]">
+  <mat-card class="post-card" appearance="outlined" >
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title> {{ title }}</mat-card-title>
+        <mat-card-subtitle>Date : {{ date | date:'short'}} &nbsp;|&nbsp; Auteur : {{ auteur }}</mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      {{content}}
+    </mat-card-content>
+  </mat-card>
+</a>

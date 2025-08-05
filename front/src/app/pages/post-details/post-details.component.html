@@ -1,0 +1,47 @@
+<div class="detail-post-page" *ngIf="postDetails$ | async as postDetailWithComments">
+  <div class="back-button-container">
+    <button mat-icon-button class="back-button" routerLink="/posts">
+      <mat-icon>west</mat-icon>
+    </button>
+    <h1> {{ postDetailWithComments?.title }}</h1>
+  </div>
+
+  <div class="detail-post-container"> 
+    <div class="detail-post">
+      <span>{{ postDetailWithComments?.createdAt | date:'dd/MM/yyyy' }}</span>
+      <span class="spaced">{{ postDetailWithComments?.author?.username }}</span>
+      <span class="spaced">{{ postDetailWithComments?.subject?.name }}</span> 
+    </div>
+    <div class="detail-post-content">
+      <p>
+        {{ postDetailWithComments?.content }}
+      </p>
+    </div>
+
+    <hr />
+    
+    <div class="detail-post-comments-section">
+      <h3>Commentaires</h3>
+      <ng-container *ngIf="postDetailWithComments?.commentaires?.length; else noPosts">
+        <div class="post-grid">
+          <div class="comment" *ngFor="let comment of postDetailWithComments?.commentaires">
+            <div class="comment-author">{{ comment.user.username }}</div>
+            <div class="comment-content">{{ comment.content }}</div>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #noPosts>
+        <p>Aucun commentaire pour le moment.</p>
+      </ng-template>
+
+      <div class="detail-post-write-comment">
+        <mat-form-field appearance="outline" class="full-width">
+          <textarea matInput placeholder="Écrivez ici votre commentaire" [(ngModel)]="inputComment"></textarea>
+        </mat-form-field>
+        <button mat-icon-button color="primary" (click)="submitMessage()">
+          <mat-icon class="rotate-send-icon">send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

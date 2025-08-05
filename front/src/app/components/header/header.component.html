@@ -9,7 +9,7 @@
 
     <nav class="nav-links">
       <a mat-button class="button-disconnect" (click)="disconnect()">Se déconnecter</a>
-      <a mat-button routerLink="/contact">Thèmes</a>
+      <a mat-button routerLink="/posts" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Articles</a>
       <button mat-icon-button routerLink="/profil" aria-label="Profil" class="circular-icon-button">
         <mat-icon>person</mat-icon>
       </button>
