@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -14,6 +14,7 @@ import localeFr from '@angular/common/locales/fr';
 import { PostComponent } from 'src/app/pages/posts-list/post.component';
 import { PostCardComponent } from 'src/app/components/post-card/post-card.component';
 import { PostCreateComponent } from 'src/app/pages/post-create/post-create.component';
+import { PostDetailsComponent } from 'src/app/pages/post-details/post-details.component';
 registerLocaleData(localeFr);
 
 const materialModules = [
@@ -29,7 +30,8 @@ const materialModules = [
 @NgModule({
   declarations: [
     PostComponent,
-    PostCreateComponent
+    PostCreateComponent,
+    PostDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +40,7 @@ const materialModules = [
     PostsRoutingModule,
     ...materialModules,
     PostCardComponent,
+    FormsModule
   ]
 })
 export class PostsModule { }

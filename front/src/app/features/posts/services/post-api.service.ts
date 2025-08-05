@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post, PostCreate } from '../interfaces/post.interface';
+import { Post, PostCreate, PostDetailWithComments } from '../interfaces/post.interface';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -20,5 +20,9 @@ export class PostApiService {
 
   public create(postCreate: PostCreate) {
     return this.httpClient.post<PostCreate>(this.pathService, postCreate);
+  }
+
+  public getOneById(postId: Number): Observable<PostDetailWithComments> {
+    return this.httpClient.get<PostDetailWithComments>(this.pathService + `/${postId}`);
   }
 }
