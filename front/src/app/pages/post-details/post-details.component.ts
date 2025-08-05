@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { CommentApiService } from 'src/app/features/comments/services/comment-api.service';
 import { PostDetailWithComments } from 'src/app/features/posts/interfaces/post.interface';
 import { PostApiService } from 'src/app/features/posts/services/post-api.service';
@@ -12,7 +12,8 @@ import { Comment, CommentCreate } from 'src/app/features/comments/interfaces/com
   styleUrls: ['./post-details.component.scss']
 })
 export class PostDetailsComponent implements OnInit, OnDestroy  {
-  postDetailWithComments: PostDetailWithComments | undefined;
+  private postDetailWithComments = new BehaviorSubject<PostDetailWithComments| undefined>(undefined) ;
+  public postDetails$ = this.postDetailWithComments.asObservable();
   error: string | null = null;
   inputComment: String = '';
 
@@ -36,7 +37,7 @@ export class PostDetailsComponent implements OnInit, OnDestroy  {
   private loadPost(): void {
     this.subscription?.unsubscribe();
     this.subscription = this.postApiService.getOneById(this.idPost).subscribe({
-      next: (data) => this.postDetailWithComments = data,
+      next: (data) => this.postDetailWithComments.next(data),
       error: (err) => {
         console.error('Erreur lors du chargement des articles', err);
         this.error = 'Error while loading the posts';
@@ -60,7 +61,13 @@ export class PostDetailsComponent implements OnInit, OnDestroy  {
 
     this.commentApiService.create(commentToSend).subscribe({
       next: (response: Comment) => {
-        this.loadPost();
+        if (this.postDetailWithComments.value) {
+          const updatedPost: PostDetailWithComments = {
+            ...this.postDetailWithComments.value,
+            commentaires: [...this.postDetailWithComments.value.commentaires, response]
+          };
+          this.postDetailWithComments.next(updatedPost);
+      }
         this.inputComment = '';
         this.onError = false;
       },

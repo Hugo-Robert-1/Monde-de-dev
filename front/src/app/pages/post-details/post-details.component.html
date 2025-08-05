@@ -1,4 +1,4 @@
-<div class="detail-post-page">
+<div class="detail-post-page" *ngIf="postDetails$ | async as postDetailWithComments">
   <div class="back-button-container">
     <button mat-icon-button class="back-button" routerLink="/posts">
       <mat-icon>west</mat-icon>
