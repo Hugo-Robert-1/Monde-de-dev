@@ -22,6 +22,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./features/posts/posts.module').then(m => m.PostsModule)
   },
+  {
+    path: 'subjects',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./features/subjects/subjects.module').then(m => m.SubjectsModule)
+  },
   { path: '**', redirectTo: '404' }
 ];
 
