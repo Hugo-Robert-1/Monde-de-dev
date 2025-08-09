@@ -29,5 +29,5 @@ export class AuthService {
       registerRequest,
       { withCredentials: true }
     );
-  }
+  }  
 }
