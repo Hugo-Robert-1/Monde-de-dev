@@ -72,7 +72,7 @@ public class UserService {
 		// We delete the refresh token from the database and we create a new one
 		refreshTokenService.deleteByUserId(user.getId());
 
-		String token = tokenGenerator.generateToken(user.getEmail());
+		String token = tokenGenerator.generateToken(user.getUsername());
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
 
 		return new AuthDTO(token, refreshToken.getToken());
