@@ -2,7 +2,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
-import { SubjectIsSubscribed } from 'src/app/features/subjects/interfaces/subject.interface';
+import { Subject, SubjectIsSubscribed } from 'src/app/features/subjects/interfaces/subject.interface';
+
+type SubjectCardInput = Subject | SubjectIsSubscribed;
 
 @Component({
   selector: 'app-subject-card',
@@ -16,13 +18,30 @@ import { SubjectIsSubscribed } from 'src/app/features/subjects/interfaces/subjec
   ]
 })
 export class SubjectCardComponent {
-  @Input() subject!: SubjectIsSubscribed;
+  @Input() mode: 'subscribe' | 'unsubscribe' = 'subscribe';
 
-  @Output() subscribe = new EventEmitter<SubjectIsSubscribed>();
+  @Input() subject!: SubjectCardInput;
+
+  @Output() action = new EventEmitter<SubjectCardInput>();
 
   constructor() { }
 
-  onSubscribe(): void {
-    this.subscribe.emit(this.subject)
+  get isSubscribed(): boolean {
+    return this.mode === 'unsubscribe' || 
+           (this.mode === 'subscribe' && (this.subject as SubjectIsSubscribed).isSubscribed);
+  }
+
+  get buttonLabel(): string {
+    return this.mode === 'unsubscribe' ? 'Se désabonner' : (this.isSubscribed ? 'Déjà abonné' : "S'abonner");
+  }
+
+  get buttonDisabled(): boolean {
+    return this.mode === 'subscribe' && this.isSubscribed;
+  }
+
+  onButtonClick(): void {
+    if (this.mode === 'unsubscribe' || !this.isSubscribed) {
+      this.action.emit(this.subject);
+    }
   }
 }

@@ -1,15 +1,17 @@
 <div class="subject-card-link">
   <mat-card class="subject-card" appearance="outlined" >
-    <mat-card-title> {{ subject.name }}</mat-card-title>
+    <mat-card-title class="subject-card-title"> {{ subject.name }}</mat-card-title>
 
     <mat-card-content>
       {{ subject.description }}
     </mat-card-content>
     
-     <mat-card-footer class="subject-card-footer">
-      <button mat-raised-button color="primary" [disabled]="subject.isSubscribed" (click)="onSubscribe()">
-        {{ subject.isSubscribed ? 'Déjà abonné' : "S'abonner" }}
+    <mat-card-footer class="subject-card-footer">
+      <button mat-raised-button color="primary"
+              [disabled]="buttonDisabled"
+              (click)="onButtonClick()">
+        {{ buttonLabel }}
       </button>
-    </mat-card-footer>
+     </mat-card-footer>
   </mat-card>
 </div>
