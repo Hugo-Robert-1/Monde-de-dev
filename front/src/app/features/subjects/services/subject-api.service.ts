@@ -25,4 +25,8 @@ export class SubjectApiService {
   public subscribe(subjectId: number): Observable<void> {
     return this.httpClient.post<void>(`${this.pathService}/${subjectId}/subscribe`, {});
   }
+
+  public unsubscribe(subjectId: number): Observable<void> {
+    return this.httpClient.delete<void>(`${this.pathService}/${subjectId}/unsubscribe`, {});
+  }
 }

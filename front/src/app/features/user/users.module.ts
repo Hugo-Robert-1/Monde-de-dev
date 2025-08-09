@@ -10,6 +10,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import localeFr from '@angular/common/locales/fr';
+import { MeComponent } from 'src/app/pages/me/me.component';
 import { UsersRoutingModule } from './users-routing.module';
 import { SubjectCardComponent } from 'src/app/components/subject-card/subject-card.component';
 registerLocaleData(localeFr);
@@ -26,7 +27,7 @@ const materialModules = [
 
 @NgModule({
   declarations: [
-
+    MeComponent
   ],
   imports: [
     CommonModule,
