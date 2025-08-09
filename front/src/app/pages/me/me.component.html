@@ -1,0 +1,55 @@
+<div class="me-page-container">
+  <section class="me-form-section">
+    <h1>Profil utilisateur</h1>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <mat-form-field appearance="outline">
+        <input matInput id="username" formControlName="username" placeholder="Username" />
+        <mat-error *ngIf="form.get('username')?.hasError('required')">Champ manquant.</mat-error>
+        <mat-error *ngIf="form.get('username')?.hasError('minlength')">Doit contenir au moins 3 caractères.</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput id="email" formControlName="email" placeholder="Email" />
+        <mat-error *ngIf="form.get('email')?.hasError('required')">Champ manquant.</mat-error>
+        <mat-error *ngIf="form.get('email')?.hasError('email')">Email invalide</mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <input matInput id="password" type="password" formControlName="password" placeholder="Password" />
+        <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+          - Le mot de passe doit contenir au moins 8 caractères.
+        </mat-error>
+        <mat-error *ngIf="form.get('password')?.hasError('strongPassword')">
+          - Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || isSubmitting">Sauvegarder</button>
+      <div *ngIf="(updateResult$ | async) === true">Mise à jour réussie !</div>
+      <div *ngIf="(updateResult$ | async) === false">Échec de la mise à jour.</div>
+    </form>
+  </section>
+  
+  <section class="unsubscribe-section">
+    <hr />
+    <h1>Abonnements</h1>
+
+    <div class="subject-list">
+      <ng-container *ngIf="subjectsObservable$ | async as subjects">
+        <ng-container *ngIf="subjects.length > 0; else noSubjects">
+          <div class="subject-grid">
+            <app-subject-card
+              *ngFor="let subject of subjects"
+              [subject]="subject"
+              mode="unsubscribe"
+              (action)="onUnsubscribe(subject)"
+            ></app-subject-card>
+          </div>
+        </ng-container>
+      </ng-container>
+
+      <ng-template #noSubjects>
+        <p>Vous n'êtes abonnés à aucun thème pour l'instant.</p>
+      </ng-template>
+    </div>
+  </section>
+</div>

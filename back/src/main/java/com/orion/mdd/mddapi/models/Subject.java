@@ -34,6 +34,8 @@ public class Subject {
 	private Long id;
 
 	private String name;
+
+	@Column(length = 2000)
 	private String description;
 
 	@CreationTimestamp

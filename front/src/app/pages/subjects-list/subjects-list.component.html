@@ -4,7 +4,8 @@
       <app-subject-card
         *ngFor="let subject of subjects"
         [subject]="subject"
-        (subscribe)="onSubscribe(subject)"
+        mode="subscribe"
+        (action)="onSubscribe(subject)"
       ></app-subject-card>
     </div>
   </ng-container>

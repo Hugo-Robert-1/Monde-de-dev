@@ -1,10 +1,6 @@
 import { SubjectLightDTO } from "../../subjects/interfaces/subject.interface";
 import { Comment } from "../../comments/interfaces/comment.interface";
-
-export interface UserLightDTO {
-  id: number;
-  username: string;
-}
+import { UserLightDTO } from "../../user/interfaces/user.interface";
 
 export interface Post {
   id: number;
@@ -30,3 +26,5 @@ export interface PostDetailWithComments {
   author: UserLightDTO;
   commentaires: Comment[],
 }
+
+export { UserLightDTO };

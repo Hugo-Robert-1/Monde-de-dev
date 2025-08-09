@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, map, Observable, of, tap } from "rxjs";
 import { SessionInformation } from "../interfaces/sessionInformation.interface";
 import { environment } from "src/environments/environment";
 import { Router } from "@angular/router";
+import { User } from "../../user/interfaces/user.interface";
 
 @Injectable({ providedIn: 'root' })
 export class SessionService {
@@ -11,6 +12,8 @@ export class SessionService {
   private sessionInformation: SessionInformation | null = null;
   private _isLoggedIn$ = new BehaviorSubject<boolean>(this.hasValidAccessToken());
   public isLoggedIn$ = this._isLoggedIn$.asObservable();
+  private meSubject = new BehaviorSubject<User | null>(null);
+  public me$ = this.meSubject.asObservable();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -64,5 +67,9 @@ export class SessionService {
 
   private hasValidAccessToken(): boolean {
     return !!this.accessToken;
+  }
+
+  setMe(user: User): void {
+    this.meSubject.next(user);
   }
 }

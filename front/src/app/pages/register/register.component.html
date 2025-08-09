@@ -1,40 +1,40 @@
 <div class="login-page">
-    <div class="back-button-container">
-      <button mat-icon-button class="back-button" routerLink="/">
-        <mat-icon>west</mat-icon>
-      </button>
-    </div>
-    <img src="/assets/logo_p6.png" alt="logo" />
-    <div class="login-container">
-      <h1>Inscription</h1>
-      <form [formGroup]="form" (ngSubmit)="submit()">
-        <label for="username">Nom d'utilisateur</label>
-        <mat-form-field appearance="outline">
-          <input matInput id="username" formControlName="username" required placeholder="Username" />
-          <mat-error *ngIf="form.get('username')?.hasError('required')">
-            Champ manquant
-          </mat-error>
-        </mat-form-field>
-        <label for="email">Adresse e-mail</label>
-        <mat-form-field appearance="outline">
-          <input matInput id="email" formControlName="email" required placeholder="Email" />
-          <mat-error *ngIf="form.get('email')?.hasError('required')">
-            Champ manquant
-          </mat-error>
-        </mat-form-field>
-        <label for="password">Mot de passe</label>
-        <mat-form-field appearance="outline">
-          <input matInput id="password" type="password" formControlName="password" required placeholder="Password" />
-          <mat-error *ngIf="form.get('password')?.hasError('required')">
-            Champ manquant
-          </mat-error>
-          <div *ngIf="form.controls.password.errors?.['strongPassword']">
-            Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.
-          </div>
-        </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
-        <p *ngIf="onError" class="error">An error occurred</p>
-      </form>
-    </div>
+  <div class="back-button-container">
+    <button mat-icon-button class="back-button" routerLink="/">
+      <mat-icon>west</mat-icon>
+    </button>
   </div>
+  <img src="/assets/logo_p6.png" alt="logo" />
+  <div class="login-container">
+    <h1>Inscription</h1>
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label for="username">Nom d'utilisateur</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="username" formControlName="username" required placeholder="Username" />
+        <mat-error *ngIf="form.get('username')?.hasError('required')">
+          Champ manquant
+        </mat-error>
+      </mat-form-field>
+      <label for="email">Adresse e-mail</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="email" formControlName="email" required placeholder="Email" />
+        <mat-error *ngIf="form.get('email')?.hasError('required')">
+          Champ manquant
+        </mat-error>
+      </mat-form-field>
+      <label for="password">Mot de passe</label>
+      <mat-form-field appearance="outline">
+        <input matInput id="password" type="password" formControlName="password" required placeholder="Password" />
+        <mat-error *ngIf="form.get('password')?.hasError('required')">
+          Champ manquant
+        </mat-error>
+        <div *ngIf="form.controls.password.errors?.['strongPassword']">
+          Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial.
+        </div>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Se connecter</button>
+      <p *ngIf="onError" class="error">An error occurred</p>
+    </form>
+  </div>
+</div>
  
