@@ -12,14 +12,14 @@
 }
 
 @media (max-width: 600px) {
-    .subject-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-    }
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
 }
 
 ::ng-deep .mat-raised-button.mat-primary {
-  background-color: #673ab7 !important; // violet du thème
+  background-color: #7763C5 !important; // violet du thème
   color: white !important;
 }

@@ -38,6 +38,7 @@ h1 {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
   gap: 1rem;
+  margin: 0 16px;
 }
 
 .unsubscribe-section {
@@ -53,13 +54,13 @@ hr {
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
-  color: #673ab7 !important;
-  stroke: #673ab7 !important;
+  color: #7763C5 !important;
+  stroke: #7763C5 !important;
 }
 
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
-  stroke: #673ab7 !important;
+  stroke: #7763C5 !important;
 }
 
 @media (max-width: 600px) {
