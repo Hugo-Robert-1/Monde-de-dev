@@ -47,6 +47,7 @@
             padding: 0.5rem 1.5rem;
             font-size: 1rem;
             display: block;
+            border-radius: 8px;
         }
     }
 }
@@ -56,6 +57,14 @@
     .login-page {
         img {
             display: none;
+        }
+    }
+}
+
+@media (max-width: 599px) {
+    .login-page {
+        .login-container {
+            padding: 0;
         }
     }
 }

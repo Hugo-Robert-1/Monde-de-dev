@@ -1,44 +1,57 @@
 .create-post-page {
-    align-items: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  
+  .back-button-container {
+    padding: 16px 16px 0px 16px;
+    margin-left: 40px;
+    width: 100%;
     display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  
+    .mat-icon {
+      font-size: 48px;
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .create-post-container {
+    align-items: center;
     flex-direction: column;
-    
-    .back-button-container {
-        padding: 16px 16px 0px 16px;
-        margin-left: 40px;
-        width: 100%;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-    
-        .mat-icon {
-          font-size: 48px;
-          width: 48px;
-          height: 48px;
-        }
-    }
+    justify-content: center;
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
 
-    .create-post-container {
-        align-items: center;
-        flex-direction: column;
-        justify-content: center;
-        max-width: 350px;
-        margin: 0 auto;
-        padding: 1rem;
-        display: flex;
-
-        .mat-form-field {
-            width: 100%;
-            margin-bottom: 1rem;
-        }
-        
-        button[type="submit"] {
-            margin: 1rem auto 0;
-            padding: 0.5rem 1.5rem;
-            font-size: 1rem;
-            display: block;
-        }
+    h1 {
+      font-weight: 700;
+      font-size: 24px;
     }
+    .mat-form-field {
+      width: 100%;
+    }
+    
+    button[type="submit"] {
+      margin: 1rem auto 0;
+      padding: 10px 40px;
+      font-size: 1rem;
+      display: block;
+    }
+  }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #673ab7 !important;
+  stroke: #673ab7 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  stroke: #673ab7 !important;
 }
 
 ::ng-deep .mat-select-panel {

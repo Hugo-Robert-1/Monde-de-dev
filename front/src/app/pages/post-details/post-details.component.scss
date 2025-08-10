@@ -25,12 +25,13 @@
   justify-content: flex-start;
   column-gap: 50px;
   row-gap: 10px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
   color: #666;
   flex-wrap: wrap;
+  gap: 8px;
   
   .spaced {
-    margin-left: 10px;
+    margin-left: 30px;
   }
 }
 
@@ -53,7 +54,7 @@
     white-space: nowrap;   
   }
   .comment-content {
-    background-color: #f0f0f0;
+    background-color: #EEEEEE;
     border-radius: 10px;
     padding: 10px;
     flex-grow: 1;
@@ -90,14 +91,33 @@
 @media (max-width: 600px) {
   .comment {
     flex-direction: column;
+    align-items: flex-end;
   }
+  
   .comment-author {
     min-width: auto;
     margin-bottom: 5px;
     white-space: normal;
+    text-align: right;
+  }
+  
+  // le contenu prend toute la largeur
+  .comment-content {
+    align-self: stretch; 
   }
 
   .post-grid {
     margin-left: 0;
+  }
+
+  // renvoie le thème sur une nouvelle ligne
+  .detail-post .spaced:last-child {
+    flex-basis: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .detail-post-comments-section {
+    margin-top: 10px;;
   }
 }
