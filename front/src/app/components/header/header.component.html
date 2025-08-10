@@ -16,18 +16,22 @@
       </button>
     </nav>
 
-    <button mat-icon-button class="burger-button" aria-label="Menu">
+    <button mat-icon-button class="burger-button" aria-label="Menu" (click)="toggleMenu()">
       <mat-icon>menu</mat-icon>
     </button>
   </ng-container>
 </mat-toolbar>
 
-<mat-sidenav-container class="sidenav-container" *ngIf="!isAuthPageMobile">
-  <mat-sidenav #drawer mode="over" position="end">
-    <nav class="mobile-menu">
-      <a mat-button routerLink="/articles" (click)="drawer.close()">Articles</a>
-      <a mat-button routerLink="/contact" (click)="drawer.close()">Thèmes</a>
-      <a mat-button routerLink="/profil" (click)="drawer.close()">Profil</a>
-    </nav>
-  </mat-sidenav>
-</mat-sidenav-container>
+<div class="overlay" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+
+<!-- Menu latéral -->
+<aside class="mobile-menu" [class.open]="isMenuOpen">
+  <a mat-button class="button-disconnect" (click)="disconnect(); closeMenu()">Se déconnecter</a>
+  <a mat-button routerLink="/posts" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Articles</a>
+  <a mat-button routerLink="/subjects" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Thèmes</a>
+  <div class="mobile-profile-icon">
+    <button mat-icon-button routerLink="/users/me" routerLinkActive="active-icon" [routerLinkActiveOptions]="{ exact: true }" aria-label="Profil" class="circular-icon-button">
+      <mat-icon>person</mat-icon>
+    </button>
+  </div>
+</aside>

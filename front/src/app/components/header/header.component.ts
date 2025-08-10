@@ -12,6 +12,7 @@ import { SessionService } from 'src/app/features/sessions/services/session.servi
 export class HeaderComponent implements OnInit, OnDestroy {
   isAuthPageMobile = false;
   isAuthPage = false;
+  isMenuOpen = false;
 
   private routerSub?: Subscription;
   
@@ -24,6 +25,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     .pipe(filter(event => event instanceof NavigationEnd))
     .subscribe(() => {
       this.updateVisibility();
+      this.closeMenu();
     });
   }
 
@@ -51,5 +53,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   get isHomePage(): boolean {
     return this.router.url === '/';
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  closeMenu() {
+    this.isMenuOpen = false;
   }
 }
