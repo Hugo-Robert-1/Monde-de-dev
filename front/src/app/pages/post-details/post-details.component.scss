@@ -1,6 +1,6 @@
 .detail-post-page {
   padding: 20px;
-  max-width: 1200px;
+  max-width: auto;
   margin: 0 auto;
 
   .back-button-container {
@@ -29,6 +29,7 @@
   color: #666;
   flex-wrap: wrap;
   gap: 8px;
+  margin-left: 50px;
   
   .spaced {
     margin-left: 30px;
@@ -36,11 +37,11 @@
 }
 
 .detail-post-content {
-  margin-bottom: 40px;
+  margin: 0 50px 40px 50px;
 }
 
 .detail-post-comments-section {
-  margin-top: 20px;;
+  margin: 20px 120px 20px 50px;
 }
 
 .comment {
@@ -50,6 +51,7 @@
 
   .comment-author {
     margin-right: 10px;
+    margin-left: 20px;
     min-width: 100px;
     white-space: nowrap;   
   }
@@ -62,11 +64,16 @@
   }
 }
 
+hr {
+  margin: 0 60px
+}
+
 .detail-post-write-comment {
   display: flex;
   width: 100%;
   gap: 10px;
-  margin-top: 15px;
+  margin-top: 16px;
+  margin-left: 40px;
 
   mat-form-field {
     flex: 1;
@@ -76,6 +83,7 @@
     flex-shrink: 0;
     min-width: 64px;
     height: 56px;
+    margin-left: 20px;
     
     .rotate-send-icon {
       display: inline-block;
@@ -86,9 +94,39 @@
 
 .post-grid {
   margin-left: 20px;
+  padding-right: 50px;
 }
 
 @media (max-width: 600px) {
+  .detail-post {
+    margin: 0 0 20px 0;
+  }
+
+  // renvoie le thème sur une nouvelle ligne
+  .detail-post .spaced:last-child {
+    flex-basis: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .detail-post-content {
+    margin: 0;
+  }
+
+  hr {
+    margin: 0 10px
+  }
+
+  .detail-post-comments-section {
+    margin: 10px 0 0 0;
+  }
+
+  .post-grid {
+    padding: 0;
+    margin-left: 0;
+  }
+
+  
   .comment {
     flex-direction: column;
     align-items: flex-end;
@@ -106,18 +144,7 @@
     align-self: stretch; 
   }
 
-  .post-grid {
-    margin-left: 0;
-  }
-
-  // renvoie le thème sur une nouvelle ligne
-  .detail-post .spaced:last-child {
-    flex-basis: 100%;
-    margin-left: 0;
-    margin-top: 4px;
-  }
-
-  .detail-post-comments-section {
-    margin-top: 10px;;
+  .detail-post-write-comment {
+    margin: 0;
   }
 }
