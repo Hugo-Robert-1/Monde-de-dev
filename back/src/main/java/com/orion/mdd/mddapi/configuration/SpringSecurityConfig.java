@@ -36,6 +36,23 @@ import com.orion.mdd.mddapi.services.CustomUserDetailsService;
 
 import jakarta.annotation.PostConstruct;
 
+/**
+ * Configuration Spring Security pour l'application.
+ * <p>
+ * Cette classe configure :
+ * <ul>
+ * <li>Le chargement des clés RSA privées et publiques pour JWT</li>
+ * <li>Le provider d'authentification DAO avec UserDetailsService et BCrypt</li>
+ * <li>Le gestionnaire d'authentification</li>
+ * <li>La chaîne de filtres de sécurité HTTP, incluant la gestion des CORS, la
+ * désactivation du CSRF, la session stateless, et les règles
+ * d'autorisation</li>
+ * <li>La configuration CORS autorisant uniquement l'origine
+ * http://localhost:4200</li>
+ * <li>Le bean JwtDecoder et JwtEncoder utilisant les clés RSA</li>
+ * </ul>
+ * </p>
+ */
 @Configuration
 public class SpringSecurityConfig {
 
@@ -48,12 +65,23 @@ public class SpringSecurityConfig {
 	@Autowired
 	private CustomUserDetailsService userDetailsService;
 
+	/**
+	 * Charge les clés RSA privées et publiques au démarrage.
+	 *
+	 * @throws Exception en cas d'erreur de chargement des clés
+	 */
 	@PostConstruct
 	public void loadKeys() throws Exception {
 		rsaPublicKey = KeyUtils.loadPublicKey();
 		rsaPrivateKey = KeyUtils.loadPrivateKey();
 	}
 
+	/**
+	 * Configure le provider d'authentification avec UserDetailsService et encodeur
+	 * de mot de passe.
+	 *
+	 * @return DaoAuthenticationProvider configuré
+	 */
 	@Bean
 	public DaoAuthenticationProvider authenticationProvider() {
 		DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
@@ -62,11 +90,29 @@ public class SpringSecurityConfig {
 		return authProvider;
 	}
 
+	/**
+	 * Expose le gestionnaire d'authentification pour l'application.
+	 *
+	 * @param config configuration d'authentification Spring
+	 * @return AuthenticationManager utilisé par Spring Security
+	 * @throws Exception en cas d'erreur
+	 */
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
 		return config.getAuthenticationManager();
 	}
 
+	/**
+	 * Configure la chaîne de filtres de sécurité HTTP.
+	 * <p>
+	 * Désactive le CSRF, configure CORS, définit la gestion de session stateless,
+	 * configure les règles d'autorisation des endpoints, et ajoute le filtre JWT.
+	 * </p>
+	 *
+	 * @param http HttpSecurity configuré par Spring
+	 * @return SecurityFilterChain configurée
+	 * @throws Exception en cas d'erreur
+	 */
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 		return http
@@ -77,10 +123,6 @@ public class SpringSecurityConfig {
 						.requestMatchers(
 								"/api/auth/login",
 								"/api/auth/register",
-								"/swagger-ui/**",
-								"/swagger-ui.html",
-								"/v3/api-docs/**",
-								"/uploads/**",
 								"/api/auth/refresh-token")
 						.permitAll()
 						.anyRequest().authenticated())
@@ -88,6 +130,15 @@ public class SpringSecurityConfig {
 				.build();
 	}
 
+	/**
+	 * Configure la source des règles CORS pour l'application.
+	 * <p>
+	 * Autorise uniquement l'origine http://localhost:4200 avec méthodes et headers
+	 * standards.
+	 * </p>
+	 *
+	 * @return CorsConfigurationSource configurée
+	 */
 	@Bean
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration config = new CorsConfiguration();
@@ -102,11 +153,21 @@ public class SpringSecurityConfig {
 		return source;
 	}
 
+	/**
+	 * Bean pour décoder les JWT en utilisant la clé publique RSA.
+	 *
+	 * @return JwtDecoder configuré
+	 */
 	@Bean
 	public JwtDecoder jwtDecoder() {
 		return NimbusJwtDecoder.withPublicKey((RSAPublicKey) rsaPublicKey).build();
 	}
 
+	/**
+	 * Bean pour encoder (signer) les JWT avec la clé privée RSA.
+	 *
+	 * @return JwtEncoder configuré
+	 */
 	@Bean
 	public JwtEncoder jwtEncoder() {
 		JWK jwk = new RSAKey.Builder((RSAPublicKey) rsaPublicKey)
@@ -117,6 +178,11 @@ public class SpringSecurityConfig {
 		return new NimbusJwtEncoder(jwkSource);
 	}
 
+	/**
+	 * Bean pour encoder les mots de passe avec BCrypt.
+	 *
+	 * @return BCryptPasswordEncoder
+	 */
 	@Bean
 	public BCryptPasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();

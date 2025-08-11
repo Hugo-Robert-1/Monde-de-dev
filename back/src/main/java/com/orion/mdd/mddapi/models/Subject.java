@@ -21,6 +21,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Représente un thème ou une catégorie à laquelle un article peut appartenir.
+ * <p>
+ * Un thème contient un nom, une description, et peut représenter plusieurs
+ * articles.
+ * </p>
+ */
 @Getter
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
@@ -29,23 +36,30 @@ import lombok.ToString;
 @NoArgsConstructor
 @Table(name = "subjects")
 public class Subject {
+
+	/** Identifiant unique du thème (clé primaire). */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/** Nom du thème. */
 	private String name;
 
+	/** Description détaillée du thème (max 2000 caractères). */
 	@Column(length = 2000)
 	private String description;
 
+	/** Date et heure de création du thème (auto-générée). */
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	/** Date et heure de dernière modification du thème (auto-générée). */
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
+	/** Ensemble des articles rattachés à ce thème. */
 	@OneToMany(mappedBy = "subject", cascade = CascadeType.ALL, orphanRemoval = true)
 	private Set<Post> posts = new HashSet<>();
 

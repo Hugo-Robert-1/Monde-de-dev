@@ -8,10 +8,23 @@ import java.security.PublicKey;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+/**
+ * Utilitaire pour le chargement des clés RSA privées et publiques à partir de
+ * fichiers PEM stockés dans les ressources de l'application.
+ * <p>
+ * Les clés sont décodées et converties dans les formats standards PKCS8
+ * (privée) et X509 (publique) pour être utilisées dans les opérations
+ * cryptographiques.
+ * </p>
+ */
 public class KeyUtils {
 
 	/**
-	 * Load the private key and adapt it to PKCS8 standard
+	 * Charge la clé privée RSA depuis un fichier PEM, puis l'adapte au format
+	 * PKCS8.
+	 *
+	 * @return la clé privée RSA au format {@link PrivateKey}
+	 * @throws Exception en cas d'erreur de lecture ou de décodage du fichier
 	 */
 	public static PrivateKey loadPrivateKey() throws Exception {
 		String key = Files.readAllLines(Paths.get("src/main/resources/keys/private1.pem"))
@@ -26,7 +39,11 @@ public class KeyUtils {
 	}
 
 	/**
-	 * Load the public key and adapt it to X509 standard
+	 * Charge la clé publique RSA depuis un fichier PEM, puis l'adapte au format
+	 * X509.
+	 *
+	 * @return la clé publique RSA au format {@link PublicKey}
+	 * @throws Exception en cas d'erreur de lecture ou de décodage du fichier
 	 */
 	public static PublicKey loadPublicKey() throws Exception {
 		String key = Files.readAllLines(Paths.get("src/main/resources/keys/public1.pem"))

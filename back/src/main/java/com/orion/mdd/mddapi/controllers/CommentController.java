@@ -18,6 +18,15 @@ import com.orion.mdd.mddapi.services.CommentService;
 
 import jakarta.validation.Valid;
 
+/**
+ * Contrôleur REST gérant les opérations de création de message
+ * <p>
+ * Ce contrôleur fournit un point d'entrée pour :
+ * <ul>
+ * <li>Création d'un commentaire en lien avec un article et un utilisateur</li>
+ * </ul>
+ * </p>
+ */
 @RestController
 @RequestMapping("/api/comment")
 public class CommentController {
@@ -31,10 +40,17 @@ public class CommentController {
 	@Autowired
 	private AuthService authService;
 
+	/**
+	 * Crée un commentaire et le lie à un utilisateur et à un article
+	 *
+	 * @param commentCreateDTO contenant le message ainsi que l'id de l'article
+	 * @return un {@link CommentDTO} contenant les infos relatives au message
+	 *         (contenu, utilisateur, date d'écriture)
+	 */
 	@PostMapping
-	public ResponseEntity<CommentDTO> createComment(@RequestBody @Valid CommentCreateDTO dto) {
+	public ResponseEntity<CommentDTO> createComment(@RequestBody @Valid CommentCreateDTO commentCreateDTO) {
 		User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
-		Comment saved = commentService.createComment(dto, user);
+		Comment saved = commentService.createComment(commentCreateDTO, user);
 		return ResponseEntity.ok(commentMapper.toDto(saved));
 	}
 }

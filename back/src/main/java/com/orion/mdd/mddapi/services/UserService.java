@@ -11,6 +11,13 @@ import com.orion.mdd.mddapi.models.RefreshToken;
 import com.orion.mdd.mddapi.models.User;
 import com.orion.mdd.mddapi.repositories.UserRepository;
 
+/**
+ * Service pour la gestion des utilisateurs.
+ * <p>
+ * Permet d'asocier des tokens à des utilisateurs, de mettre à jour les données
+ * utilisateurs et de récupérer un user par son id
+ * </p>
+ */
 @Service
 public class UserService {
 

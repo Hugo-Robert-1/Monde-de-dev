@@ -23,10 +23,29 @@ import com.orion.mdd.mddapi.payload.request.LoginRequest;
 import com.orion.mdd.mddapi.payload.request.RegisterRequest;
 import com.orion.mdd.mddapi.services.AuthService;
 
+/**
+ * Contrôleur REST gérant les opérations d'authentification et de gestion des
+ * tokens JWT.
+ * <p>
+ * Ce contrôleur fournit des points d'entrée pour :
+ * <ul>
+ * <li>Inscription d'un nouvel utilisateur et génération d'un access token</li>
+ * <li>Connexion et génération d'un access token</li>
+ * <li>Récupération des informations de l'utilisateur courant</li>
+ * <li>Renouvellement du token d'accès via un refresh token</li>
+ * </ul>
+ * Les refresh tokens sont envoyés et stockés sous forme de cookies HTTPOnly
+ * pour plus de sécurité.
+ * </p>
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
 
+	/**
+	 * Durée de validité du refresh token en millisecondes, injectée depuis la
+	 * configuration.
+	 */
 	@Value("${app.jwtRefreshExpirationMs}")
 	private Long refreshTokenDurationMs;
 
@@ -34,10 +53,13 @@ public class AuthController {
 	private AuthService authService;
 
 	/**
-	 * @PostMapping("/register") public ResponseEntity<AuthDTO>
-	 * register(@RequestBody RegisterRequest request) { return
-	 * ResponseEntity.ok(authService.register(request)); }
-	 **/
+	 * Inscrit un nouvel utilisateur et génère un access token et un refresh token.
+	 *
+	 * @param request les informations nécessaires à l'inscription (email, mot de
+	 *                passe, username)
+	 * @return une réponse HTTP contenant l'access token dans le corps et le refresh
+	 *         token en cookie sécurisé
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@RequestBody RegisterRequest request) {
 		AuthDTO jwtResponse = authService.register(request);
@@ -56,10 +78,13 @@ public class AuthController {
 	}
 
 	/**
-	 * @PostMapping("/login") public ResponseEntity<AuthDTO> login(@RequestBody
-	 * LoginRequest request) { return ResponseEntity.ok(authService.login(request));
-	 * }
-	 **/
+	 * Authentifie un utilisateur existant et génère un nouvel access token et un
+	 * refresh token.
+	 *
+	 * @param request les identifiants de connexion (email/username et mot de passe)
+	 * @return une réponse HTTP contenant l'access token dans le corps et le refresh
+	 *         token en cookie sécurisé
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody LoginRequest request) {
 		AuthDTO jwtResponse = authService.login(request);
@@ -77,6 +102,13 @@ public class AuthController {
 				.body(Map.of("accessToken", jwtResponse.accessToken()));
 	}
 
+	/**
+	 * Récupère les informations de l'utilisateur actuellement authentifié.
+	 *
+	 * @param authentication objet Spring Security contenant les informations de
+	 *                       l'utilisateur connecté
+	 * @return un {@link UserDTO} représentant l'utilisateur courant
+	 */
 	@GetMapping("/me")
 	public ResponseEntity<UserDTO> me(Authentication authentication) {
 		String identifier = authentication.getName(); // peut être un email ou un username
@@ -85,10 +117,13 @@ public class AuthController {
 	}
 
 	/**
-	 * @PostMapping("/refresh-token") public ResponseEntity<?>
-	 * refreshToken(@RequestBody TokenRefreshRequestDTO request) { return
-	 * ResponseEntity.ok(authService.refreshAccessToken(request)); }
-	 **/
+	 * Renouvelle l'access token à partir d'un refresh token stocké en cookie
+	 * sécurisé.
+	 *
+	 * @param refreshToken le refresh token extrait du cookie HTTPOnly
+	 * @return une réponse HTTP contenant un nouvel access token et un nouveau
+	 *         refresh token
+	 */
 	@PostMapping("/refresh-token")
 	public ResponseEntity<?> refreshToken(@CookieValue("refreshToken") String refreshToken) {
 		TokenRefreshRequestDTO requestDTO = new TokenRefreshRequestDTO(refreshToken);

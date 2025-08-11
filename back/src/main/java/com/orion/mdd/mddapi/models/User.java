@@ -23,6 +23,13 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+/**
+ * Représente un utilisateur du système.
+ * <p>
+ * Contient les informations de connexion, les dates de création et
+ * modification, ainsi que les thèmes auxquels l'utilisateur est abonné.
+ * </p>
+ */
 @Getter
 @Setter
 @ToString(onlyExplicitlyIncluded = true)
@@ -33,27 +40,34 @@ import lombok.ToString;
 @NoArgsConstructor
 public class User {
 
+	/** Identifiant unique de l'utilisateur (clé primaire). */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
+	/** Adresse email unique de l'utilisateur. */
 	@Column(unique = true, length = 255)
 	private String email;
 
+	/** Nom d'utilisateur unique. */
 	@Column(unique = true, length = 255)
 	private String username;
 
+	/** Mot de passe hashé de l'utilisateur. */
 	@Column(length = 255)
 	private String password;
 
+	/** Date et heure de création de l'utilisateur (auto-générée). */
 	@CreationTimestamp
 	@Column(name = "created_at")
 	private LocalDateTime createdAt;
 
+	/** Date et heure de la dernière modification (auto-générée). */
 	@UpdateTimestamp
 	@Column(name = "updated_at")
 	private LocalDateTime updatedAt;
 
+	/** Ensemble des thèmes auxquels l'utilisateur est abonné. */
 	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "SUBSCRIPTION", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "subject_id"))
 	private Set<Subject> subscribedSubjects = new HashSet<>();

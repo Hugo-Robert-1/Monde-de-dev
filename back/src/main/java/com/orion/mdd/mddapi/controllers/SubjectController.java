@@ -20,6 +20,20 @@ import com.orion.mdd.mddapi.models.User;
 import com.orion.mdd.mddapi.services.AuthService;
 import com.orion.mdd.mddapi.services.SubjectService;
 
+/**
+ * Contrôleur REST gérant les opérations de gestion des thèmes
+ * <p>
+ * Ce contrôleur fournit un point d'entrée pour :
+ * <ul>
+ * <li>Récupérer de tous les thèmes</li>
+ * <li>Récupérer d'un thème grâce à son ID</li>
+ * <li>Souscrire à un thème</li>
+ * <li>Désabonner à un thème</li>
+ * <li>Récupérer tous les thèmes avec l'état de souscription de l'utilisateur
+ * connecté</li>
+ * </ul>
+ * </p>
+ */
 @RestController
 @RequestMapping("/api/subject")
 public class SubjectController {
@@ -34,8 +48,10 @@ public class SubjectController {
 	private AuthService authService;
 
 	/**
-	 * @param id
-	 * @return ResponseEntity<SubjectDTO>
+	 * Récupère un thème par son identifiant.
+	 *
+	 * @param id identifiant du thème
+	 * @return {@link ResponseEntity} contenant le {@link SubjectDTO} correspondant
 	 */
 	@GetMapping("/{id}")
 	public ResponseEntity<SubjectDTO> getSubjectById(@PathVariable Long id) {
@@ -45,8 +61,9 @@ public class SubjectController {
 	}
 
 	/**
-	 * 
-	 * @return ResponseEntity List<SubjectDTO>
+	 * Récupère la liste de tous les thèmes.
+	 *
+	 * @return {@link ResponseEntity} contenant la liste des {@link SubjectDTO}
 	 */
 	@GetMapping
 	public ResponseEntity<List<SubjectDTO>> getAllSubjects() {
@@ -54,6 +71,13 @@ public class SubjectController {
 		return ResponseEntity.ok().body(subjectMapper.toDtoList(subjects));
 	}
 
+	/**
+	 * Souscrit l'utilisateur connecté au thème spécifié.
+	 *
+	 * @param idSubject identifiant du thème
+	 * @return code HTTP 200 si la souscription est réussie, 404 si le thème
+	 *         n'existe pas, 400 en cas d'erreur
+	 */
 	@PostMapping("/{idSubject}/subscribe")
 	public ResponseEntity<?> subscribe(@PathVariable Long idSubject) {
 		try {
@@ -63,7 +87,8 @@ public class SubjectController {
 				return ResponseEntity.notFound().build();
 			}
 
-			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService
+					.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 			this.subjectService.subscribe(subject, user);
 
@@ -73,6 +98,13 @@ public class SubjectController {
 		}
 	}
 
+	/**
+	 * Désabonne l'utilisateur connecté du thème spécifié.
+	 *
+	 * @param idSubject identifiant du thème
+	 * @return code HTTP 200 si le désabonnement est réussi, 404 si le thème
+	 *         n'existe pas, 400 en cas d'erreur
+	 */
 	@DeleteMapping("/{idSubject}/unsubscribe")
 	public ResponseEntity<?> unsubscribe(@PathVariable Long idSubject) {
 		try {
@@ -82,7 +114,8 @@ public class SubjectController {
 				return ResponseEntity.notFound().build();
 			}
 
-			User user = authService.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
+			User user = authService
+					.findUserByIdentifier(SecurityContextHolder.getContext().getAuthentication().getName());
 
 			this.subjectService.unsubscribe(subject, user);
 
@@ -93,10 +126,11 @@ public class SubjectController {
 	}
 
 	/**
-	 * Retrieves the full list of themes and returns it with an isSubscribed
-	 * attribute based on the choice of logged-in user
-	 * 
-	 * @return List<SubjectWithSubscriptionDTO> subjects
+	 * Récupère la liste des thèmes avec un indicateur de souscription pour
+	 * l'utilisateur connecté.
+	 *
+	 * @return {@link ResponseEntity} contenant la liste des
+	 *         {@link SubjectWithSubscriptionDTO}
 	 */
 	@GetMapping("/with-subscription-status")
 	public ResponseEntity<List<SubjectWithSubscriptionDTO>> getSubjectsWithSubscriptionStatus() {
