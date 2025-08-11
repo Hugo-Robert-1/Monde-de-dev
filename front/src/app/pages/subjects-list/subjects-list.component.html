@@ -1,0 +1,16 @@
+<div class="subject-container">
+  <ng-container *ngIf="subjects.length > 0; else noSubjects">
+     <div class="subject-grid">
+      <app-subject-card
+        *ngFor="let subject of subjects"
+        [subject]="subject"
+        mode="subscribe"
+        (action)="onSubscribe(subject)"
+      ></app-subject-card>
+    </div>
+  </ng-container>
+
+  <ng-template #noSubjects>
+    <p>Aucun sujet pour le moment.</p>
+  </ng-template>
+</div>

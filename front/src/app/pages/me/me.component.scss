@@ -1,0 +1,99 @@
+.me-page-container {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+
+  .me-form-section {
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+
+    .mat-form-field {
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    
+    button[type="submit"] {
+      margin: 16px auto 16px;
+      padding: 0.2rem 1.5rem;
+      font-size: 1rem;
+      display: block;
+      border-radius: 8px;
+    }
+  }
+}
+
+h1 {
+  margin-bottom: 30px;
+  margin-top: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.subject-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+  gap: 1rem;
+  margin: 0 16px;
+}
+
+.unsubscribe-section {
+  width: 100%;
+}
+
+hr {
+  margin: 0 80px
+}
+
+.subject-list {
+  width: 100%;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #7763C5 !important;
+  stroke: #7763C5 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  stroke: #7763C5 !important;
+}
+
+@media (max-width: 600px) {
+  .subject-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
+
+  hr {
+    margin: 0 20px
+  }
+
+  h1 {
+    margin-bottom: 20px;
+    margin-top: 10px;
+  }
+
+  .me-page-container
+  .me-form-section
+  .mat-form-field {
+    margin-bottom: 0;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 900px) {
+  .subject-grid {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .subject-grid {
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  }
+}

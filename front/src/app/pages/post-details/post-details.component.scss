@@ -1,0 +1,150 @@
+.detail-post-page {
+  padding: 20px;
+  max-width: auto;
+  margin: 0 auto;
+
+  .back-button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+    align-items: center;
+
+    button.back-button {
+      margin-right: 10px;
+    }
+  
+    h1 {
+      font-size: 32px;
+      margin: 0;
+    }
+  }
+}
+
+.detail-post {
+  display: flex;
+  justify-content: flex-start;
+  column-gap: 50px;
+  row-gap: 10px;
+  margin-bottom: 16px;
+  color: #666;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: 50px;
+  
+  .spaced {
+    margin-left: 30px;
+  }
+}
+
+.detail-post-content {
+  margin: 0 50px 40px 50px;
+}
+
+.detail-post-comments-section {
+  margin: 20px 120px 20px 50px;
+}
+
+.comment {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: flex-start;
+
+  .comment-author {
+    margin-right: 10px;
+    margin-left: 20px;
+    min-width: 100px;
+    white-space: nowrap;   
+  }
+  .comment-content {
+    background-color: #EEEEEE;
+    border-radius: 10px;
+    padding: 10px;
+    flex-grow: 1;
+    word-break: break-word;
+  }
+}
+
+hr {
+  margin: 0 60px
+}
+
+.detail-post-write-comment {
+  display: flex;
+  width: 100%;
+  gap: 10px;
+  margin-top: 16px;
+  margin-left: 40px;
+
+  mat-form-field {
+    flex: 1;
+  }
+
+  button {
+    flex-shrink: 0;
+    min-width: 64px;
+    height: 56px;
+    margin-left: 20px;
+    
+    .rotate-send-icon {
+      display: inline-block;
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.post-grid {
+  margin-left: 20px;
+  padding-right: 50px;
+}
+
+@media (max-width: 600px) {
+  .detail-post {
+    margin: 0 0 20px 0;
+  }
+
+  // renvoie le thème sur une nouvelle ligne
+  .detail-post .spaced:last-child {
+    flex-basis: 100%;
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .detail-post-content {
+    margin: 0;
+  }
+
+  hr {
+    margin: 0 10px
+  }
+
+  .detail-post-comments-section {
+    margin: 10px 0 0 0;
+  }
+
+  .post-grid {
+    padding: 0;
+    margin-left: 0;
+  }
+
+  
+  .comment {
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  
+  .comment-author {
+    min-width: auto;
+    margin-bottom: 5px;
+    white-space: normal;
+    text-align: right;
+  }
+  
+  // le contenu prend toute la largeur
+  .comment-content {
+    align-self: stretch; 
+  }
+
+  .detail-post-write-comment {
+    margin: 0;
+  }
+}

@@ -1,0 +1,142 @@
+.toolbar {
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  border-bottom: 1px solid black;
+
+  .logo {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    cursor: pointer;
+
+    img {
+      height: 60px;
+      max-height: 100%;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+
+  .spacer {
+    flex: 1;
+  }
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.burger-button {
+  display: none;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+
+  a {
+    margin-bottom: 8px;
+  }
+}
+
+.circular-icon-button {
+  background-color: #e0e0e0;
+  border-radius: 50%;
+  padding: 12px;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  mat-icon {
+    color: #424242;
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+
+  &.active-icon {
+    box-shadow: 0 0 0 2px #7e57c2; // cercle extérieur violet
+    mat-icon {
+      color: #7e57c2; // icône violet
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  z-index: 99;
+
+  width: 100%;
+  height: 100%;
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100vh;
+  background: white;
+  box-shadow: -2px 0 8px rgba(0,0,0,0.3);
+  transform: translateX(100%);
+  transition: transform 0.3s ease-in-out;
+  padding: 20px;
+  display: flex;
+  z-index: 100;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  a {
+    align-self: flex-end;
+    margin-bottom: 0px;
+  }
+
+  &.open {
+    transform: translateX(0);
+  }
+
+  .button-disconnect {
+    margin-top: 20px;
+  }
+}
+
+.mobile-profile-icon {
+  margin-top: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 24px;
+}
+
+.sidenav-container {
+  height: auto;
+}
+
+.button-disconnect {
+  color: red;
+}
+
+.active-link {
+  color: mediumpurple
+}
+
+/* Responsive */
+@media (max-width: 599px) {
+  .nav-links {
+    display: none;
+  }
+
+  .burger-button {
+    display: inline-flex;
+  }
+}

@@ -6,11 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+  isAuthPage = false;
+  
   constructor() {}
 
   ngOnInit(): void {}
-
-  start() {
-    alert('Commencez par lire le README et à vous de jouer !');
-  }
 }

@@ -1,0 +1,31 @@
+<div class="post-container">
+  <div class="post-actions">
+    <div class="create-post-button-container">
+      <button mat-raised-button color="primary" routerLink="/posts/create">Créer un article</button>
+    </div>
+
+    <div class="sort-button-container">
+  <div class="sort-action" (click)="toggleSort()">
+    Trier par
+    <mat-icon>{{ sortAsc ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+  </div>
+</div>
+  </div>
+
+  <ng-container *ngIf="posts.length > 0; else noPosts">
+    <div class="post-grid">
+      <app-post-card
+        *ngFor="let post of posts"
+        [title]="post.title"
+        [content]="post.content"
+        [auteur]="post.author.username"
+        [date]="post.createdAt"
+        [postId]="post.id"
+      ></app-post-card>
+    </div>
+  </ng-container>
+
+  <ng-template #noPosts>
+    <p>Aucun article pour le moment.</p>
+  </ng-template>
+</div>

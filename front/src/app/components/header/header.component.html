@@ -1,0 +1,37 @@
+<mat-toolbar class="toolbar" color="transparent" *ngIf="!isHomePage && !isAuthPageMobile">
+  <!-- Logo -->
+  <a class="logo" routerLink="/">
+    <img src="/assets/logo_p6.png" alt="Logo" />
+  </a>
+
+  <ng-container *ngIf="!isAuthPage">
+    <span class="spacer"></span>
+
+    <nav class="nav-links">
+      <a mat-button class="button-disconnect" (click)="disconnect()">Se déconnecter</a>
+      <a mat-button routerLink="/posts" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Articles</a>
+      <a mat-button routerLink="/subjects" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}">Thèmes</a>
+      <button mat-icon-button routerLink="/users/me" routerLinkActive="active-icon" [routerLinkActiveOptions]="{ exact: true }" aria-label="Profil" class="circular-icon-button">
+        <mat-icon>person</mat-icon>
+      </button>
+    </nav>
+
+    <button mat-icon-button class="burger-button" aria-label="Menu" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </ng-container>
+</mat-toolbar>
+
+<div class="overlay" *ngIf="isMenuOpen" (click)="closeMenu()"></div>
+
+<!-- Menu latéral -->
+<aside class="mobile-menu" [class.open]="isMenuOpen">
+  <a mat-button class="button-disconnect" (click)="disconnect(); closeMenu()">Se déconnecter</a>
+  <a mat-button routerLink="/posts" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Articles</a>
+  <a mat-button routerLink="/subjects" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:true}" (click)="closeMenu()">Thèmes</a>
+  <div class="mobile-profile-icon">
+    <button mat-icon-button routerLink="/users/me" routerLinkActive="active-icon" [routerLinkActiveOptions]="{ exact: true }" aria-label="Profil" class="circular-icon-button">
+      <mat-icon>person</mat-icon>
+    </button>
+  </div>
+</aside>

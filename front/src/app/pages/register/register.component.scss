@@ -1,0 +1,70 @@
+.login-page {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  
+    img {
+        width: 70%;
+        margin: 40px 40px 0 40px
+    }
+  
+    .back-button-container {
+        box-sizing: border-box;
+        width: 100%;
+        padding: 16px 16px 0 36px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    
+        .mat-icon {
+          font-size: 48px;
+          width: 48px;
+          height: 48px;
+        }
+        
+    }
+
+    .login-container {
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        max-width: 350px;
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+
+        h1 {
+            margin-bottom: 40px;
+        }
+
+        .mat-form-field {
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        
+        button[type="submit"] {
+            margin: 1rem auto 0;
+            padding: 0.5rem 1.5rem;
+            font-size: 1rem;
+            display: block;
+            border-radius: 8px;
+        }
+    }
+}
+
+// On affiche le logo seulement quand on est sur un écran mobile  
+@media (min-width: 600px) {
+    .login-page {
+        img {
+            display: none;
+        }
+    }
+}
+
+@media (max-width: 599px) {
+    .login-page {
+        .login-container {
+            padding: 0;
+        }
+    }
+}

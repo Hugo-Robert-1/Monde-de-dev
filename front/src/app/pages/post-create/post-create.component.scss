@@ -1,0 +1,109 @@
+.create-post-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .header-row {
+    width: 100%;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+
+    .back-button-container {
+      margin-bottom: 0;
+      margin-right: 0;
+    }
+
+    h1 {
+      font-weight: 700;
+      font-size: 24px;
+      margin: 0;
+      text-align: center;
+      flex: 1;
+      white-space: normal;
+      word-break: break-word;
+    }
+  }
+
+  .create-post-container {
+    max-width: 350px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .mat-form-field {
+      width: 100%;
+    }
+
+    button[type="submit"] {
+      margin: 1rem auto 0;
+      padding: 0 40px;
+      font-size: 1rem;
+      display: block;
+    }
+  }
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  color: #7763C5 !important;
+  stroke: #7763C5 !important;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+  stroke: #7763C5 !important;
+}
+
+
+@media (min-width: 600px) {
+  .create-post-page {
+    .header-row {
+      flex-direction: row;
+      align-items: center;
+      gap: 16px;
+			position: relative;
+
+      .back-button-container {
+        margin-bottom: 0;
+        margin-right: 8px;
+				z-index: 2;
+      }
+
+      h1 {
+        text-align: center;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 28px;
+				margin-left: -60px;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .create-post-page {
+    .header-row {
+      align-items: stretch;
+
+      .back-button-container {
+        align-self: flex-start;
+        position: static;
+      }
+
+      h1 {
+        align-self: center;
+        position: static;
+        width: 100%;
+        z-index: 1;
+      }
+    }
+  }
+}
