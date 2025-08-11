@@ -20,10 +20,10 @@ export class AppComponent {
 
   ngOnInit() {
     this.sessionService.autoLogin().pipe(take(1)).subscribe((isLoggedIn) => {
-    if (isLoggedIn && this.router.url === '/') {
-      this.router.navigate(['/posts']);
-    }
-  });
+      if (isLoggedIn && this.router.url === '/') {
+        this.router.navigate(['/posts']);
+      }
+    });
   }
 
   public logout(): void {
