@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './features/auth/services/auth.service';
 import { SessionService } from './features/sessions/services/session.service';
-import { Observable } from 'rxjs';
+import { Observable, take } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,6 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent {
   constructor(
-    private authService: AuthService,
     private router: Router,
     private sessionService: SessionService) {
   }
@@ -21,7 +19,11 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.sessionService.autoLogin().subscribe();
+    this.sessionService.autoLogin().pipe(take(1)).subscribe((isLoggedIn) => {
+    if (isLoggedIn && this.router.url === '/') {
+      this.router.navigate(['/posts']);
+    }
+  });
   }
 
   public logout(): void {
