@@ -1,4 +1,4 @@
-import { UserLightDTO } from "../../posts/interfaces/post.interface";
+import { UserLightDTO } from "../../user/interfaces/user.interface";
 
 export interface Comment {
   id: number;

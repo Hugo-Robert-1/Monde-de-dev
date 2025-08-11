@@ -55,15 +55,15 @@
 }
 
 @media (max-width: 600px) {
-    .post-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 1rem;
-    }
+  .post-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+  }
 
-    .post-actions {
-    flex-direction: column;
-    align-items: center;
+  .post-actions {
+  flex-direction: column;
+  align-items: center;
   }
 
   .create-post-button-container,

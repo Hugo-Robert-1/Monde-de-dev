@@ -46,5 +46,4 @@ export class LoginComponent {
       error: error => this.onError = true,
     });
   }
-
 }

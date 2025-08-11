@@ -26,5 +26,3 @@ export interface PostDetailWithComments {
   author: UserLightDTO;
   commentaires: Comment[],
 }
-
-export { UserLightDTO };

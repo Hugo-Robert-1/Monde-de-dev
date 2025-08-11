@@ -7,9 +7,11 @@
     </mat-card-content>
     
     <mat-card-footer class="subject-card-footer">
-      <button mat-raised-button color="primary"
-              [disabled]="buttonDisabled"
-              (click)="onButtonClick()">
+      <button 
+        mat-raised-button color="primary"
+        [disabled]="buttonDisabled"
+        (click)="onButtonClick()"
+      >
         {{ buttonLabel }}
       </button>
      </mat-card-footer>

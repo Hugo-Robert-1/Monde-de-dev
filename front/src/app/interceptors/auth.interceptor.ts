@@ -35,7 +35,7 @@ export class AuthInterceptor implements HttpInterceptor {
       this.refreshTokenSubject.next(null);
 
       return this.sessionService.refreshToken().pipe(
-        switchMap(({ accessToken }) => { // attention à la déstructuration
+        switchMap(({ accessToken }) => {
           this.isRefreshing = false;
           this.sessionService.setAccessToken(accessToken);
           this.refreshTokenSubject.next(accessToken);

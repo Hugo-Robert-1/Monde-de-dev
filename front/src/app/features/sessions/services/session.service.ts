@@ -68,8 +68,4 @@ export class SessionService {
   private hasValidAccessToken(): boolean {
     return !!this.accessToken;
   }
-
-  setMe(user: User): void {
-    this.meSubject.next(user);
-  }
 }
